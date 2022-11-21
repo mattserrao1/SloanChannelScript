@@ -4,14 +4,14 @@ install.packages("dataRetrieval",
                          getOption("repos")))
 						 
 library(zoo)
-library(raster)
-library(rgdal)
+#library(raster) not needed, I just had added for something else
+#library(rgdal) not needed, I just had added for something else
 library(hydroTSM)
 library(Kendall)
 library(dataRetrieval)
 library(measurements)
 ##Let's Pull Discharge, "Q" (00060);And Rainfall, "P" (00045)
-site.code = "09419665"
+site.code = "09419665" #sitecode for sloan channel via USGS
 readNWISsite(site.code)  
 what.data = whatNWISdata(siteNumber = site.code)
 start.date = ""  # Blanks get all of the data, but if a specific range is needed enter here 
@@ -116,7 +116,7 @@ discharge.over.1 = rainfall.2017wy[rainfall.2017wy$Q.ft.s> 1,] ## 0.8255 is the 
 floodindex = c(0,cumsum(diff(discharge.over.1$Date)>1))
 #2006
 discharge2006.over.1 = rainfall.2006wy[rainfall.2006wy$Q.ft.s>1,] ##0.7324 is the mean discharge of 2006 WY
-floodindex2006 = c(0,cumsum(diff(discharge2006.over.1$Date)>1))
+floodindex2006 = c(0,cumsum(diff(discharge2006.over.1$Date)>1)) #not needed unless doing stormflow (P v Q, mm for x events)
 #1989
 discharge1989.over.1 = rainfall.1989wy[rainfall.1989wy$Q.ft.s>1,] ##0.0742 is mean discharge of 1989 WY
 floodindex1989 = c(0,cumsum(diff(discharge1989.over.1$Date)>1))
