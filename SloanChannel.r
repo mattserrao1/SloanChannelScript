@@ -2,7 +2,7 @@
 install.packages("dataRetrieval", 
                  repos=c("http://owi.usgs.gov/R",
                          getOption("repos")))
-						 
+install.packages("trend")						 
 library(zoo)
 #library(raster) not needed, I just had added for something else
 #library(rgdal) not needed, I just had added for something else
@@ -10,6 +10,7 @@ library(hydroTSM)
 library(Kendall)
 library(dataRetrieval)
 library(measurements)
+library(trend)
 ##Let's Pull Discharge, "Q" (00060);And Rainfall, "P" (00045)
 site.code = "09419665" #sitecode for sloan channel via USGS
 readNWISsite(site.code)  
@@ -53,6 +54,8 @@ completedtable1 = completedtable[-c(16,17), ]
 lm.sloan.annualq = lm(completedtable1$mmyr ~ completedtable1$WYear) 
 km.sloan.annualq = MannKendall(completedtable1$mmyr)
 fannualqstd = rstandard(lm.sloan.annualq)
+qslope = sens.slope(completedtable1$mmyr, conf.level = 0.95)
+print(qslope)
 summary(km.sloan.annualq)
 summary(lm.sloan.annualq)
 qqnorm(fannualqstd,ylab="Standardized Residuals",xlab="Normal Scores",main="Annual Q Residuals")
@@ -61,6 +64,8 @@ qqline(fannualqstd)
 lm.sloan.annualp = lm(completedtable1$pmm ~ completedtable1$WYear) 
 km.sloan.annualp = MannKendall(completedtable1$pmm)
 fannualpstd = rstandard(lm.sloan.annualp)
+pslope = sens.slope(completedtable1$pmm, conf.level = 0.95)
+print(pslope)
 summary(km.sloan.annualp)
 summary(lm.sloan.annualp)
 qqnorm(fannualpstd,ylab="Standardized Residuals",xlab="Normal Scores",main="Annual P Residuals")
@@ -71,6 +76,8 @@ km.sloan.annualqp = MannKendall(completedtable1$QP)
 fannualqpstd = rstandard(lm.sloan.annualqp)
 summary(km.sloan.annualqp)
 summary(lm.sloan.annualqp)
+qpslope = sens.slope(completedtable1$QP, conf.level = 0.95)
+print(qpslope)
 qqnorm(fannualqpstd,ylab="Standardized Residuals",xlab="Normal Scores",main="Annual Q/P Residuals")
 qqline(fannualqpstd)
 ##3 panel residual
