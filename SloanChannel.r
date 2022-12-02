@@ -39,7 +39,7 @@ drain.area.mi2 = site.data$drain_area_va ##setting the variable drain.area.mi2 a
 drain.area.mm2= conv_unit(drain.area.mi2, "mi2", "mm2")
 print(drain.area.mm2)
 ft3tommyr = 8.932128e+14/drain.area.mm2 #8.93212 is ft3/s to mm3/yr
-fannual.mean.cfs$mmyr = fannual.mean.cfs$MeanQcfs/ft3tommyr
+fannual.mean.cfs$mmyr = fannual.mean.cfs$MeanQcfs*ft3tommyr
 fannual.mean.pin$mmyr = fannual.mean.pin$MeanPin*25.4
 ####Now we have P in mm/yr and Q in mm/yr, so we can do trend tests but we need Q/P and to clean up the data
 ##First, let's find our runoff coefficient for each year, or Q/P
